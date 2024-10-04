@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="formApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form App</title>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- jQuery (required for Toastr) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Our CSS file -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Our main JavaScript file -->
+    <script src="main.js"></script>
+
+</head>
+
+
+
+<body ng-app="formApp">
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <!-- My main AngularJS module -->
+    <script type="text/javascript" src="app.js"></script>
+
+    <main class="container">
+        <div>
+            <h1 class="baseH1">Client Contact Form</h1>
+
+            <div class="form-container" ng-controller="formController">
+                <form class="base-form" ng-repeat="client in clients" ng-submit="submitForm(client)">
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" ng-model="client.name" required>
+                        </div>
+
+                        <div class="form-column">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" ng-model="client.email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone" ng-model="client.phone" required>
+                        </div>
+
+                        <div class="form-column">
+                            <label for="street">Street Address</label>
+                            <input type="text" id="street" name="street" ng-model="client.street" required>
+                        </div>
+                    </div>
+
+                    <div class="form-column options-wrapper">
+                        <label for="options">Options</label>
+                        <div>
+                            <div class="checkbox-wrapper-parent">
+                                <div class="checkbox-wrapper-2">
+                                    <input class="checkbox-toggler" type="checkbox" id="option1" name="option1"
+                                        ng-model="client.option1">
+                                </div>
+                                <label for="option1">Option 1</label>
+                            </div>
+
+                            <div class="checkbox-wrapper-parent">
+                                <div class="checkbox-wrapper-2">
+                                    <input class="checkbox-toggler" type="checkbox" id="option2" name="option2"
+                                        ng-model="client.option2">
+                                </div>
+                                <label for="option2">Option 2</label>
+                            </div>
+
+                            <div class="checkbox-wrapper-parent">
+                                <div class="checkbox-wrapper-2">
+                                    <input class="checkbox-toggler" type="checkbox" id="option3" name="option3"
+                                        ng-model="client.option3">
+                                </div>
+                                <label for="option3">Option 3</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-column">
+                        <div class="checkbox-wrapper-parent form-holder">
+                            <div class="checkbox-wrapper-2 form-holder-flex">
+                                <input class="checkbox-toggler" type="checkbox" id="holder" name="holder"
+                                    ng-model="client.holder" ng-checked="client.holder || ($index === 0)"
+                                    (change)="updateFormHolder($index)">
+                                <label for="holder">Form Holder</label>
+                            </div>
+                        </div>
+                        <p class="form-desc">(Automatically selected as Form Holder)</p>
+                    </div>
+
+                    <div class="btn_wrapper">
+                        <button class="btn btn_add" type="button" ng-click="addClient()">Add Another Client <i
+                                class="ml-2 fa-solid fa-plus"></i></button>
+                        <button class="btn btn_submit" type="submit">Submit <i
+                                class="ml-2 fa-solid fa-paper-plane"></i></button>
+                    </div>
+
+                    <div>
+                        <!-- Show "Remove" button only if there's more than 1 client -->
+                        <button class="btn_remove" type="button" ng-if="$index > 0" ng-click="removeClient($index)">
+                            <i class="ml-2 fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+
+                </form>
+
+                <div ng-if="jsonData">
+                    <h2>Form Data in JSON:</h2>
+                    <pre>
+                        {{ jsonData | json }}
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
